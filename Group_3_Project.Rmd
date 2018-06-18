@@ -16,7 +16,9 @@ output:
 `%!in%` = Negate(`%in%`)
 ```
 
-
+```{r loading_libraries}
+library(dplyr)
+```
 
 This notebook documents work by group 3 utilizing support vector machines in the analysis of health data. Informaiton about the project can be found [here](https://iphie2018.wordpress.com/academic-program/).
 
@@ -60,7 +62,7 @@ Discharge of hospice (discharge ids 13 and 14) and Deceased (discharge ids 11, 2
 ## Excluding Visits Beyond the First
 
 ```{r}
-
+PatientData <- PatientData %>% group_by(patient_nbr) %>% filter(row_number(encounter_id) == 1)
 ```
 
 
