@@ -54,10 +54,10 @@ PatientData$payer_code <- NULL
 
 ```{r excuding_hospice_expired}
 #Excluding Dispositions of Hospice and Expired
-PatientData <- PatientData[PatientData$discharge_disposition_id %!in% c(13,14,11,20,21),]
+PatientData <- PatientData[PatientData$discharge_disposition_id %!in% c(13,14,11,19,20,21),]
 ```
 
-Discharge of hospice (discharge ids 13 and 14) and Deceased (discharge ids 11, 20, 21) were excluded from our data, leaving `r nrow(PatientData)`
+Discharge of hospice (discharge ids 13 and 14) and Deceased (discharge ids 11,19, 20, 21) were excluded from our data, leaving `r nrow(PatientData)`
 
 ## Excluding Visits Beyond the First
 
