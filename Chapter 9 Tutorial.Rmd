@@ -14,5 +14,6 @@ output: html_notebook
 
 ```
 
-This notebook demonstrates the techniques provided in the book, "An Introduction to Statistical Learning" and in preperation for the 2018 IPHIE. Informaiton about the project can be found [here](https://iphie2018.wordpress.com/academic-program/).
+This notebook demonstrates the techniques provided in chapter 9 of the book, "An Introduction to Statistical Learning" and in preperation for the 2018 IPHIE. Informaiton about the project can be found [here](https://iphie2018.wordpress.com/academic-program/).
+
 

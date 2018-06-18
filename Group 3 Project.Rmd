@@ -14,5 +14,21 @@ output: html_notebook
 
 ```
 
-This notebook demonstrates the techniques provided in the book, "An Introduction to Statistical Learning" and in preperation for the 2018 IPHIE. Informaiton about the project can be found [here](https://iphie2018.wordpress.com/academic-program/).
+This notebook documents work by group 3 utilizing support vector machines in the analysis of health data. Informaiton about the project can be found [here](https://iphie2018.wordpress.com/academic-program/).
 
+# Front Matter
+
+# Extraction
+
+Data were acquired from ....
+
+Two files are retrievable. One of the aggregate patient data, and one of mappings to descriptions of numeric values.
+
+This later file was manually transformed into a long version for reading into our analysis environment.
+
+```{r load_data}
+PatientData <- read.csv("./Data/diabetic_data.csv", na.strings = "?")
+
+
+Mappings <- read.csv("./Data/IDs_mapping_long.csv")
+```
