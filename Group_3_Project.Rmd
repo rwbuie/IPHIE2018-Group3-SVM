@@ -37,9 +37,16 @@ Mappings <- read.csv("./Data/IDs_mapping_long.csv")
 
 ```
 
-# Implimenting Exclusions
+# Implimenting Exclusions and Variable Removals
 
-We initially decided to match our data to that of the original researchers. They reported 69984 observations after all exlcusion, but the public data set contained 101766. The below code attempts to match the researcher's count.
+We initially decided to match our data to that of the original researchers. The researchers excluded the variables "weight" and "payer code" due to missingness and, in the case of payer code, an expectation of no association. They kept "meedical specialty" but created an indicator of "missing" to account for ht ehigh proportion (47%) of missing values. Additionally, only the first visit (defined by the lowest encounter id per patient) was kept, patients discharged as deceased or to hospice were excluded. The researchers reported 69984 observations after all exlcusion, but the public data set contained 101766. The below code attempts to match the researcher's count.
+
+## Removing Weight and and payer Code Variables
+
+```{r remove_unused_variables}
+PatientData$weight <- NULL
+PatientData$payer_code <- NULL
+```
 
 ## Excluding Hospice and Expired Patients
 
