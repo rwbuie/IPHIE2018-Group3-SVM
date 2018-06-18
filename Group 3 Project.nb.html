@@ -9,12 +9,12 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Jolien Lam (j.lam@amc.uva.nl) – University of Amsterdam" />
-<meta name="author" content="Yeng Moua (moua0199@umn.edu) – University of Minnesota" />
-<meta name="author" content="Fortuna Vuthaj (fortuna.vuthaj@gmail.com) – University of Heilbronn/Heidelberg" />
-<meta name="author" content="Ronald Buie (buierw@uw.edu) – University of Washington" />
-<meta name="author" content="Jessica Kuo (U1010030142cmu.edu.tw) – Taipei Medical University" />
-<meta name="author" content="Diane Walker (diane.walker@utah.edu) – University of Utah" />
+<meta name="author" content="Jolien Lam (j.c.lam@amc.uva.nl) – University of Amsterdam - jolienlam" />
+<meta name="author" content="Yeng Moua (moua0199@umn.edu) – University of Minnesota -" />
+<meta name="author" content="Fortuna Vuthaj (fortuna.vuthaj@gmail.com) – University of Heilbronn/Heidelberg -" />
+<meta name="author" content="Ronald Buie (buierw@uw.edu) – University of Washington - rwbuie" />
+<meta name="author" content="Jessica Kuo (U101003014@cmu.edu.tw) – Taipei Medical University -" />
+<meta name="author" content="Diane Walker (diane.walker@utah.edu) – University of Utah - pluckylass" />
 
 
 <title>Group 3 - Chapter 9: Support Vector Machines Tutorial</title>
@@ -174,12 +174,12 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Group 3 - Chapter 9: Support Vector Machines Tutorial</h1>
-<h4 class="author"><em>Jolien Lam (<a href="mailto:j.lam@amc.uva.nl">j.lam@amc.uva.nl</a>) – University of Amsterdam</em></h4>
-<h4 class="author"><em>Yeng Moua (<a href="mailto:moua0199@umn.edu">moua0199@umn.edu</a>) – University of Minnesota</em></h4>
-<h4 class="author"><em>Fortuna Vuthaj (<a href="mailto:fortuna.vuthaj@gmail.com">fortuna.vuthaj@gmail.com</a>) – University of Heilbronn/Heidelberg</em></h4>
-<h4 class="author"><em>Ronald Buie (<a href="mailto:buierw@uw.edu">buierw@uw.edu</a>) – University of Washington</em></h4>
-<h4 class="author"><em>Jessica Kuo (U1010030142cmu.edu.tw) – Taipei Medical University</em></h4>
-<h4 class="author"><em>Diane Walker (<a href="mailto:diane.walker@utah.edu">diane.walker@utah.edu</a>) – University of Utah</em></h4>
+<h4 class="author"><em>Jolien Lam (<a href="mailto:j.c.lam@amc.uva.nl">j.c.lam@amc.uva.nl</a>) – University of Amsterdam - jolienlam</em></h4>
+<h4 class="author"><em>Yeng Moua (<a href="mailto:moua0199@umn.edu">moua0199@umn.edu</a>) – University of Minnesota -</em></h4>
+<h4 class="author"><em>Fortuna Vuthaj (<a href="mailto:fortuna.vuthaj@gmail.com">fortuna.vuthaj@gmail.com</a>) – University of Heilbronn/Heidelberg -</em></h4>
+<h4 class="author"><em>Ronald Buie (<a href="mailto:buierw@uw.edu">buierw@uw.edu</a>) – University of Washington - rwbuie</em></h4>
+<h4 class="author"><em>Jessica Kuo (<a href="mailto:U101003014@cmu.edu.tw">U101003014@cmu.edu.tw</a>) – Taipei Medical University -</em></h4>
+<h4 class="author"><em>Diane Walker (<a href="mailto:diane.walker@utah.edu">diane.walker@utah.edu</a>) – University of Utah - pluckylass</em></h4>
 
 </div>
 
@@ -198,17 +198,14 @@ $(document).ready(function () {
 <p>This later file was manually transformed into a long version for reading into our analysis environment.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTWFwcGluZ3MgPC0gcmVhZC5jc3YoXCIsL0RhdGEvSURzX21hcHBpbmdfbG9uZy5jc3ZcIilcblxuYGBgIn0= -->
-<pre class="r"><code>Mappings &lt;- read.csv(&quot;,/Data/IDs_mapping_long.csv&quot;)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuUGF0aWVudERhdGEgPC0gcmVhZC5jc3YoXCIuL0RhdGEvZGlhYmV0aWNfZGF0YS5jc3ZcIiwgbmEuc3RyaW5ncyA9IFwiP1wiKVxuTWFwcGluZ3MgPC0gcmVhZC5jc3YoXCIuL0RhdGEvSURzX21hcHBpbmdfbG9uZy5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code>PatientData &lt;- read.csv(&quot;./Data/diabetic_data.csv&quot;, na.strings = &quot;?&quot;)
+Mappings &lt;- read.csv(&quot;./Data/IDs_mapping_long.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiY2Fubm90IG9wZW4gZmlsZSAnLC9EYXRhL0lEc19tYXBwaW5nX2xvbmcuY3N2JzogTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeUVycm9yIGluIGZpbGUoZmlsZSwgXCJydFwiKSA6IGNhbm5vdCBvcGVuIHRoZSBjb25uZWN0aW9uXG4ifQ== -->
-<pre><code>cannot open file ',/Data/IDs_mapping_long.csv': No such file or directoryError in file(file, &quot;rt&quot;) : cannot open the connection</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdyb3VwIDMgLSBDaGFwdGVyIDk6IFN1cHBvcnQgVmVjdG9yIE1hY2hpbmVzIFR1dG9yaWFsIg0KYXV0aG9yOiANCi0gSm9saWVuIExhbSAoai5sYW1AYW1jLnV2YS5ubCkg4oCTIFVuaXZlcnNpdHkgb2YgQW1zdGVyZGFtDQotIFllbmcgTW91YSAobW91YTAxOTlAdW1uLmVkdSkg4oCTIFVuaXZlcnNpdHkgb2YgTWlubmVzb3RhDQotIEZvcnR1bmEgVnV0aGFqIChmb3J0dW5hLnZ1dGhhakBnbWFpbC5jb20pIOKAkyBVbml2ZXJzaXR5IG9mIEhlaWxicm9ubi9IZWlkZWxiZXJnDQotIFJvbmFsZCBCdWllIChidWllcndAdXcuZWR1KSDigJMgVW5pdmVyc2l0eSBvZiBXYXNoaW5ndG9uDQotIEplc3NpY2EgS3VvIChVMTAxMDAzMDE0MmNtdS5lZHUudHcpIOKAkyBUYWlwZWkgTWVkaWNhbCBVbml2ZXJzaXR5DQotIERpYW5lIFdhbGtlciAoZGlhbmUud2Fsa2VyQHV0YWguZWR1KSDigJMgVW5pdmVyc2l0eSBvZiBVdGFoDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7ciBzZXR1cCwgaW5jbHVkZT0gRkFMU0V9DQoNCmBgYA0KDQpUaGlzIG5vdGVib29rIGRvY3VtZW50cyB3b3JrIGJ5IGdyb3VwIDMgdXRpbGl6aW5nIHN1cHBvcnQgdmVjdG9yIG1hY2hpbmVzIGluIHRoZSBhbmFseXNpcyBvZiBoZWFsdGggZGF0YS4gSW5mb3JtYWl0b24gYWJvdXQgdGhlIHByb2plY3QgY2FuIGJlIGZvdW5kIFtoZXJlXShodHRwczovL2lwaGllMjAxOC53b3JkcHJlc3MuY29tL2FjYWRlbWljLXByb2dyYW0vKS4NCg0KIyBGcm9udCBNYXR0ZXINCg0KIyBFeHRyYWN0aW9uDQoNCkRhdGEgd2VyZSBhY3F1aXJlZCBmcm9tIC4uLi4NCg0KVHdvIGZpbGVzIGFyZSByZXRyaWV2YWJsZS4gT25lIG9mIHRoZSBhZ2dyZWdhdGUgcGF0aWVudCBkYXRhLCBhbmQgb25lIG9mIG1hcHBpbmdzIHRvIGRlc2NyaXB0aW9ucyBvZiBudW1lcmljIHZhbHVlcy4NCg0KVGhpcyBsYXRlciBmaWxlIHdhcyBtYW51YWxseSB0cmFuc2Zvcm1lZCBpbnRvIGEgbG9uZyB2ZXJzaW9uIGZvciByZWFkaW5nIGludG8gb3VyIGFuYWx5c2lzIGVudmlyb25tZW50Lg0KDQpgYGB7ciBsb2FkX2RhdGF9DQpQYXRpZW50RGF0YSA8LSByZWFkLmNzdigiLi9EYXRhL2RpYWJldGljX2RhdGEuY3N2IiwgbmEuc3RyaW5ncyA9ICI/IikNCg0KDQpNYXBwaW5ncyA8LSByZWFkLmNzdigiLi9EYXRhL0lEc19tYXBwaW5nX2xvbmcuY3N2IikNCmBgYA==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdyb3VwIDMgLSBDaGFwdGVyIDk6IFN1cHBvcnQgVmVjdG9yIE1hY2hpbmVzIFR1dG9yaWFsIg0KYXV0aG9yOiANCi0gSm9saWVuIExhbSAoai5jLmxhbUBhbWMudXZhLm5sKSDigJMgVW5pdmVyc2l0eSBvZiBBbXN0ZXJkYW0gLSBqb2xpZW5sYW0NCi0gWWVuZyBNb3VhIChtb3VhMDE5OUB1bW4uZWR1KSDigJMgVW5pdmVyc2l0eSBvZiBNaW5uZXNvdGEgLSANCi0gRm9ydHVuYSBWdXRoYWogKGZvcnR1bmEudnV0aGFqQGdtYWlsLmNvbSkg4oCTIFVuaXZlcnNpdHkgb2YgSGVpbGJyb25uL0hlaWRlbGJlcmcgLSANCi0gUm9uYWxkIEJ1aWUgKGJ1aWVyd0B1dy5lZHUpIOKAkyBVbml2ZXJzaXR5IG9mIFdhc2hpbmd0b24gLSByd2J1aWUNCi0gSmVzc2ljYSBLdW8gKFUxMDEwMDMwMTRAY211LmVkdS50dykg4oCTIFRhaXBlaSBNZWRpY2FsIFVuaXZlcnNpdHkgLSANCi0gRGlhbmUgV2Fsa2VyIChkaWFuZS53YWxrZXJAdXRhaC5lZHUpIOKAkyBVbml2ZXJzaXR5IG9mIFV0YWggLSBwbHVja3lsYXNzDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7ciBzZXR1cCwgaW5jbHVkZT0gRkFMU0V9DQoNCmBgYA0KDQpUaGlzIG5vdGVib29rIGRvY3VtZW50cyB3b3JrIGJ5IGdyb3VwIDMgdXRpbGl6aW5nIHN1cHBvcnQgdmVjdG9yIG1hY2hpbmVzIGluIHRoZSBhbmFseXNpcyBvZiBoZWFsdGggZGF0YS4gSW5mb3JtYWl0b24gYWJvdXQgdGhlIHByb2plY3QgY2FuIGJlIGZvdW5kIFtoZXJlXShodHRwczovL2lwaGllMjAxOC53b3JkcHJlc3MuY29tL2FjYWRlbWljLXByb2dyYW0vKS4NCg0KIyBGcm9udCBNYXR0ZXINCg0KIyBFeHRyYWN0aW9uDQoNCkRhdGEgd2VyZSBhY3F1aXJlZCBmcm9tIC4uLi4NCg0KVHdvIGZpbGVzIGFyZSByZXRyaWV2YWJsZS4gT25lIG9mIHRoZSBhZ2dyZWdhdGUgcGF0aWVudCBkYXRhLCBhbmQgb25lIG9mIG1hcHBpbmdzIHRvIGRlc2NyaXB0aW9ucyBvZiBudW1lcmljIHZhbHVlcy4NCg0KVGhpcyBsYXRlciBmaWxlIHdhcyBtYW51YWxseSB0cmFuc2Zvcm1lZCBpbnRvIGEgbG9uZyB2ZXJzaW9uIGZvciByZWFkaW5nIGludG8gb3VyIGFuYWx5c2lzIGVudmlyb25tZW50Lg0KDQpgYGB7ciBsb2FkX2RhdGF9DQpQYXRpZW50RGF0YSA8LSByZWFkLmNzdigiLi9EYXRhL2RpYWJldGljX2RhdGEuY3N2IiwgbmEuc3RyaW5ncyA9ICI/IikNCg0KDQpNYXBwaW5ncyA8LSByZWFkLmNzdigiLi9EYXRhL0lEc19tYXBwaW5nX2xvbmcuY3N2IikNCg0KYGBg</div>
 
 
 
