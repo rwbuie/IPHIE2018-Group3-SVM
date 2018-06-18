@@ -33,8 +33,6 @@ This later file was manually transformed into a long version for reading into ou
 ```{r load_data}
 PatientData <- read.csv("./Data/diabetic_data.csv", na.strings = "?")
 
-
-
 Mappings <- read.csv("./Data/IDs_mapping_long.csv")
 
 ```
@@ -46,14 +44,18 @@ We initially decided to match our data to that of the original researchers. They
 ## Excluding Hospice and Expired Patients
 
 ```{r excuding_hospice_expired}
-
-
 #Excluding Dispositions of Hospice and Expired
 PatientData <- PatientData[PatientData$discharge_disposition_id %!in% c(13,14,11,20,21),]
-
-
 ```
 
 Discharge of hospice (discharge ids 13 and 14) and Deceased (discharge ids 11, 20, 21) were excluded from our data, leaving `r nrow(PatientData)`
+
+## Excluding Visits Beyond the First
+
+```{r}
+
+```
+
+
 
 
