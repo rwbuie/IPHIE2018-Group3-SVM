@@ -65,6 +65,11 @@ Discharge of hospice (discharge ids 13 and 14) and Deceased (discharge ids 11,19
 PatientData <- PatientData %>% group_by(patient_nbr) %>% filter(row_number(encounter_id) == 1)
 ```
 
+Limiting patients to the first observation (and discarding all others) brings our data to `r nrow(PatientData)` of an expected 69984.
+
+# Implementing a Support Vector Machine
+
+We began our exploration by implimenting a SVM with default options off of a randoml
 
 
 
