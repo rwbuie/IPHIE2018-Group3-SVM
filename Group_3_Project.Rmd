@@ -14,9 +14,6 @@ output:
 
 ```{r setup, include= FALSE}
 
-#this should be changed to use something like 80% of the current system's available rM. iS THERE A CALL TO GET CURRENT MAX RAM?
-memory.limit(200000)
-memory.size(max = TRUE)
 
 `%!in%` = Negate(`%in%`)
 
