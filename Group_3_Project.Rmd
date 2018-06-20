@@ -81,6 +81,36 @@ PatientData$glimepiride.pioglitazone <- NULL
 summary(PatientData)
 ```
 
+## Creating Binary Outcome Classes
+
+SVM are designed to handle binary outcomes, however, our outcome is trinary (<30 >30 no). We are aware of 3 strategies for addressing this. These strategies require creating alternate binary outcomes for use in analysis. We will create 3 variables:
+
+```{r}
+
+PatientData$UnderNo <- 0
+PatientData[PatientData$UnderNo != ">30",]$UnderNo <- 1
+
+PatientData$OverNo <- 0
+PatientData[PatientData$UnderNo != "<30",]$OverNo <- 1
+
+PatientData$OverUnder <- 0
+PatientData[PatientData$UnderNo != "NO",]$OverUnder <- 1
+
+PatientData$readmit.B <- PatientData$readmitted
+levels(PatientData$readmit.B) <- c("YES","YES","NO")
+
+
+```
+
+Variable | Values
+---------|--------
+UnderNo  | <30 NO
+OverNo   | >30 NO
+OverUnder| >30 <30
+Readmit.B| No YES 
+
+
+
 # Implementing a Support Vector Machine
 
 We began our exploration by implimenting a SVM with default options. We use 20% of our data as a training set and the remaining 80 as a test.
