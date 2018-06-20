@@ -121,7 +121,7 @@ testingRows3 <- 1:nrow(PatientData) %!in% trainingRows3
 
 The tuning function identifies models with best performance on iterative runs against rand samples of the data (by default 10x cross validation), generating error and dispersion rates for each against the provided training data. It can perform this test for a series of parameterizations of the algorithm, in this case against multiple cost values, allowing us to identify the best performing cost to select.
 
-```{r, include = FALSE}
+```{r eval=FALSE, include=FALSE}
 
 tunningValues <- tune(svm, readmitted ~ ., data = PatientData[trainingRows1,], kernel = "linear", ranges = list(cost = c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
 summary(tunningValues)
@@ -145,19 +145,18 @@ Set3Prediction <- predict(set2FIT, PatientData[testingRows2,])
 ```
 
 ```{r}
-set.seed(1000)
 
+set1FITRadial <- svm(readmitted ~ ., data = PatientData[trainingRows1,], kernel = "radial", cost = .0001, gamma = 1, scale = FALSE)
+summary(set1FITRadial)
+Set1PredictionRadial <- predict(set1FITRadial, PatientData[testingRows1,])
+table(predict = Set1PredictionRadial, truth = PatientData[testingRows1,"readmitted"])
 
+set2FIT <- svm(readmitted ~ ., data = PatientData[trainingRows2,], kernel = "linear", cost = 10)
+Set2Prediction <- predict(set2FIT, PatientData[testingRows2,])
 
-AllDataSVMFit <- svm(readmitted ~ ., data = PatientData[trainingRows,], scale = FALSE, kernel = "linear")
-
-
-plot.svm(AllDataSVMFit, PatientData)
-
-
-
+set3FIT <- svm(readmitted ~ ., data = PatientData[trainingRows3,], kernel = "linear", cost = 10)
+Set3Prediction <- predict(set2FIT, PatientData[testingRows2,])
 ```
-
 
 
 
