@@ -94,8 +94,17 @@ summary(PatientData$examide)
 plot(svmfit, data = testData[1:100,])
 predictions <- predict(svmfit)
 predictionsTest <- predict(svmfit, testData[101:300,])
+set.seed(1000)
+trainingRows <- sample(nrow(PatientData), round(nrow(PatientData)*0.2,0))
+testingRows <- 1:nrow(PatientData) %!in% trainingRows
 
-AllDataSVMFit <- svm(readmitted ~ ., data = testData, kernel = "linear")
+
+AllDataSVMFit <- svm(readmitted ~ ., data = PatientData[trainingRows,], kernel = "linear")
+trainPredictions <- predict(AllDataSVMFit)
+testPredictions <-predict(AllDataSVMFit, PatientData[testingRows,])
 ```
+
+
+
 
 
