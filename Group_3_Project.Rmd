@@ -12,11 +12,11 @@ output:
 
 ```{r setup, include= FALSE}
 
+#this should be changed to use something like 80% of the current system's available rM. iS THERE A CALL TO GET CURRENT MAX RAM?
+memory.limit(200000)
 
 `%!in%` = Negate(`%in%`)
-```
 
-```{r loading_libraries}
 library(dplyr) #load functions for transforming 
 library(e1071)
 ```
@@ -68,19 +68,34 @@ PatientData <- PatientData %>% group_by(patient_nbr) %>% filter(row_number(encou
 
 Limiting patients to the first observation (and discarding all others) brings our data to `r nrow(PatientData)` of an expected 69984.
 
+# Parameterizing Data
+
+In order to be meaningufully used in our SVM, variables must have at least 2 values among the observations available. Variables with less were removed from the data set
+
+```{r}
+PatientData$acetohexamide <- NULL
+PatientData$examide <- NULL
+PatientData$citoglipton <- NULL
+PatientData$glimepiride.pioglitazone <- NULL
+
+summary(PatientData)
+```
+
 # Implementing a Support Vector Machine
 
-We began our exploration by implimenting a SVM with default options off of a randoml
+We began our exploration by implimenting a SVM with default options. We use 20% of our data as a training set and the remaining 80 as a test.
 
 ```{r}
 svmfit = svm(readmitted ~ examide + acarbose + nateglinide + diag_1 , PatientData, "linear", cost = 10, scale = FALSE)
 testData <- PatientData[c("readmitted","acarbose","diag_1")]
-memory.limit(200000)
+
 svmfit = svm(readmitted ~ acarbose + diag_1, data = testData[1:100,], kernel = "linear")
 summary(PatientData$examide)
 plot(svmfit, data = testData[1:100,])
 predictions <- predict(svmfit)
 predictionsTest <- predict(svmfit, testData[101:300,])
+
+AllDataSVMFit <- svm(readmitted ~ ., data = testData, kernel = "linear")
 ```
 
 
