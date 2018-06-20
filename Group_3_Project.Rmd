@@ -96,14 +96,6 @@ summary(PatientData)
 We began our exploration by implimenting a SVM with default options. We use 20% of our data as a training set and the remaining 80 as a test.
 
 ```{r}
-svmfit = svm(readmitted ~ examide + acarbose + nateglinide + diag_1 , PatientData, "linear", cost = 10, scale = FALSE)
-testData <- PatientData[c("readmitted","acarbose","diag_1")]
-
-svmfit = svm(readmitted ~ acarbose + diag_1, data = testData[1:100,], kernel = "linear")
-summary(PatientData$examide)
-plot(svmfit, data = testData[1:100,])
-predictions <- predict(svmfit)
-predictionsTest <- predict(svmfit, testData[101:300,])
 set.seed(1000)
 trainingRows <- sample(nrow(PatientData), round(nrow(PatientData)*0.2,0))
 testingRows <- 1:nrow(PatientData) %!in% trainingRows
