@@ -1,10 +1,12 @@
 ---
 title: 'Group 3 - Chapter 9: Support Vector Machines Tutorial'
 author:
-- Jolien Lam (j.c.lam@amc.uva.nl) â€“ University of Amsterdam - jolienlam
-- Yeng Moua (moua0199@umn.edu) â€“ University of Minnesota -
-- Fortuna Vuthaj (fortuna.vuthaj@gmail.com) â€“ University of Heilbronn/Heidelberg
-  -
+- Jolien Lam (j.lam@amc.uva.nl) – University of Amsterdam
+- Yeng Moua (moua0199@umn.edu) – University of Minnesota
+- Fortuna Vuthaj (fortuna.vuthaj@gmail.com) – University of Heilbronn/Heidelberg
+- Ronald Buie (buierw@uw.edu) – University of Washington
+- Jessica Kuo (U101003014@cmu.edu.tw) – Taipei Medical University
+- Diane Walker (diane.walker@utah.edu) – University of Utah
 output:
   html_document:
     df_print: paged
@@ -14,6 +16,7 @@ output:
 
 #this should be changed to use something like 80% of the current system's available rM. iS THERE A CALL TO GET CURRENT MAX RAM?
 memory.limit(200000)
+memory.size(max = TRUE)
 
 `%!in%` = Negate(`%in%`)
 
