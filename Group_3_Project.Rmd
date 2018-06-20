@@ -68,7 +68,17 @@ PatientData <- PatientData %>% group_by(patient_nbr) %>% filter(row_number(encou
 
 Limiting patients to the first observation (and discarding all others) brings our data to `r nrow(PatientData)` of an expected 69984.
 
-# Parameterizing Data
+## parameterizing Outcome
+
+SVM require a Y of two levels, or special procedures to compensate. In this case our source study was conducted with readmissions under 30 days counted as a readmissions, and visits without readmissions or admissions after 30 days were counted as not having a readmission.
+
+```{r}
+
+levels(PatientData$readmitted) <- c("YES","NO","NO")
+
+```
+
+# Limiting Data
 
 In order to be meaningufully used in our SVM, variables must have at least 2 values among the observations available. Variables with less were removed from the data set
 
@@ -80,36 +90,6 @@ PatientData$glimepiride.pioglitazone <- NULL
 
 summary(PatientData)
 ```
-
-## Creating Binary Outcome Classes
-
-SVM are designed to handle binary outcomes, however, our outcome is trinary (<30 >30 no). We are aware of 3 strategies for addressing this. These strategies require creating alternate binary outcomes for use in analysis. We will create 3 variables:
-
-```{r}
-
-PatientData$UnderNo <- 0
-PatientData[PatientData$UnderNo != ">30",]$UnderNo <- 1
-
-PatientData$OverNo <- 0
-PatientData[PatientData$UnderNo != "<30",]$OverNo <- 1
-
-PatientData$OverUnder <- 0
-PatientData[PatientData$UnderNo != "NO",]$OverUnder <- 1
-
-PatientData$readmit.B <- PatientData$readmitted
-levels(PatientData$readmit.B) <- c("YES","YES","NO")
-
-
-```
-
-Variable | Values
----------|--------
-UnderNo  | <30 NO
-OverNo   | >30 NO
-OverUnder| >30 <30
-Readmit.B| No YES 
-
-
 
 # Implementing a Support Vector Machine
 
