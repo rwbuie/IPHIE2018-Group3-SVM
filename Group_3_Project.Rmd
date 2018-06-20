@@ -16,6 +16,8 @@ output:
 
 `%!in%` = Negate(`%in%`)
 
+memory.limit(200000)
+
 library(dplyr) #load functions for transforming 
 library(e1071)
 ```
@@ -94,18 +96,52 @@ summary(PatientData)
 
 We began our exploration by implimenting a SVM with default options. We use 20% of our data as a training set and the remaining 80 as a test.
 
+## Establishing a set of training and testing subsets
+
+We define 3 sets of training and test subsets, each using a random 20/80 split of our data
+
+
+```{r}
+set.seed(1000)
+trainingRows1 <- sample(nrow(PatientData), round(nrow(PatientData)*0.2,0))
+testingRows1 <- 1:nrow(PatientData) %!in% trainingRows1
+
+set.seed(2000)
+trainingRows2 <- sample(nrow(PatientData), round(nrow(PatientData)*0.2,0))
+testingRows2 <- 1:nrow(PatientData) %!in% trainingRows2
+
+set.seed(3000)
+trainingRows3 <- sample(nrow(PatientData), round(nrow(PatientData)*0.2,0))
+testingRows3 <- 1:nrow(PatientData) %!in% trainingRows3
+
+```
+
+
+## Tuning to identify the most efficient cost parameter
+
+The tuning function identifies models with best performance on iterative runs against rand samples of the data (by default 10x cross validation), generating error and dispersion rates for each against the provided training data. It can perform this test for a series of parameterizations of the algorithm, in this case against multiple cost values, allowing us to identify the best performing cost to select.
+
+```{r, include = FALSE}
+
+tunningValues <- tune(svm, readmitted ~ ., data = PatientData[trainingRows1,], kernel = "linear", ranges = list(cost = c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
+summary(tunningValues)
+plot(tunningValues$best.model)
+```
+
+Using the tuning function we identify a cost of `r tuningValues$best.performance` as minimizing the number of support vectors while classifying t
+
 ```{r}
 
-set.seed(1000)
-trainingRows <- sample(nrow(PatientData), round(nrow(PatientData)*0.2,0))
-testingRows <- 1:nrow(PatientData) %!in% trainingRows
+set1FIT <- svm(readmitted ~ ., data = PatientData[trainingRows1,], kernel = "linear", cost = 10, scale = FALSE)
+summary(set1FIT)
+Set1Prediction <- predict(set1FIT, PatientData[testingRows1,])
+table(predict = Set1Prediction, truth = PatientData[testingRows1,"readmitted"])
 
-tunningValues <- tune(svm, readmitted ~ ., data = PatientData[trainingRows,], kernel = "linear", ranges = list(cost = c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
-summary(tunningValues)
+set2FIT <- svm(readmitted ~ ., data = PatientData[trainingRows2,], kernel = "linear", cost = 10)
+Set2Prediction <- predict(set2FIT, PatientData[testingRows2,])
 
-
-predictions <- predict(AllDataSVMFit)
-testPredictions <-predict(AllDataSVMFit, PatientData[testingRows,])
+set3FIT <- svm(readmitted ~ ., data = PatientData[trainingRows3,], kernel = "linear", cost = 10)
+Set3Prediction <- predict(set2FIT, PatientData[testingRows2,])
 ```
 
 ```{r}
