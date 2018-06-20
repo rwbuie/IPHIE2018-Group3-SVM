@@ -14,7 +14,6 @@ output:
 
 ```{r setup, include= FALSE}
 
-
 `%!in%` = Negate(`%in%`)
 
 library(dplyr) #load functions for transforming 
@@ -91,19 +90,36 @@ PatientData$glimepiride.pioglitazone <- NULL
 summary(PatientData)
 ```
 
-# Implementing a Support Vector Machine
+# Implementing a Support Vector Classifier
 
 We began our exploration by implimenting a SVM with default options. We use 20% of our data as a training set and the remaining 80 as a test.
 
 ```{r}
+
 set.seed(1000)
 trainingRows <- sample(nrow(PatientData), round(nrow(PatientData)*0.2,0))
 testingRows <- 1:nrow(PatientData) %!in% trainingRows
 
+tunningValues <- tune(svm, readmitted ~ ., data = PatientData[trainingRows,], kernel = "linear", ranges = list(cost = c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
+summary(tunningValues)
 
-AllDataSVMFit <- svm(readmitted ~ ., data = PatientData[trainingRows,], kernel = "linear")
-trainPredictions <- predict(AllDataSVMFit)
+
+predictions <- predict(AllDataSVMFit)
 testPredictions <-predict(AllDataSVMFit, PatientData[testingRows,])
+```
+
+```{r}
+set.seed(1000)
+
+
+
+AllDataSVMFit <- svm(readmitted ~ ., data = PatientData[trainingRows,], scale = FALSE, kernel = "linear")
+
+
+plot.svm(AllDataSVMFit, PatientData)
+
+
+
 ```
 
 
