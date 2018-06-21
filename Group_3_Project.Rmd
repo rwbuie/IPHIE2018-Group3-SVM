@@ -132,7 +132,7 @@ Using the tuning function we identify a cost of `r tuningValues$best.performance
 
 ```{r}
 
-set1FIT <- svm(readmitted ~ ., data = PatientData[trainingRows1,], kernel = "linear", cost = 10, scale = FALSE)
+set1FIT <- svm(readmitted ~ ., data = PatientData[trainingRows1,], kernel = "linear", cost = 1000, scale = FALSE)
 summary(set1FIT)
 Set1Prediction <- predict(set1FIT, PatientData[testingRows1,])
 table(predict = Set1Prediction, truth = PatientData[testingRows1,"readmitted"])
@@ -148,7 +148,7 @@ Set3Prediction <- predict(set2FIT, PatientData[testingRows2,])
 
 set1FITRadial <- svm(readmitted ~ ., data = PatientData[trainingRows1,], kernel = "radial", cost = .0001, gamma = 1, scale = FALSE)
 summary(set1FITRadial)
-Set1PredictionRadial <- predict(set1FITRadial, PatientData[testingRows1,])
+Set1PredictionRadial <- predict(set1FITRadial, PatientData[testingRows1,], na.action = na.exclude)
 table(predict = Set1PredictionRadial, truth = PatientData[testingRows1,"readmitted"])
 
 set2FIT <- svm(readmitted ~ ., data = PatientData[trainingRows2,], kernel = "linear", cost = 10)
