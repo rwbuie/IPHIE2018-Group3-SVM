@@ -103,7 +103,8 @@ We define 3 sets of training and test subsets, each using a random 20/80 split o
 
 ```{r}
 set.seed(1000)
-trainingRows1 <- sample(nrow(PatientData), round(nrow(PatientData)*0.2,0))
+trainingRows1 <- sample(1:nrow(PatientData), round(nrow(PatientData)*0.2,0))
+trainingRows1 <- trainingRows1[order(trainingRows1)]
 testingRows1 <- 1:nrow(PatientData) %!in% trainingRows1
 
 set.seed(2000)
@@ -146,7 +147,7 @@ Set3Prediction <- predict(set2FIT, PatientData[testingRows2,])
 
 ```{r}
 
-set1FITRadial <- svm(readmitted ~ ., data = PatientData[trainingRows1,], kernel = "radial", cost = .0001, gamma = 1, scale = FALSE)
+set1FITRadial <- svm(readmitted ~ ., data = PatientData[trainingRows1,], kernel = "radial", cost = 10, gamma = 1, scale = FALSE)
 summary(set1FITRadial)
 Set1PredictionRadial <- predict(set1FITRadial, PatientData[testingRows1,], na.action = na.exclude)
 table(predict = Set1PredictionRadial, truth = PatientData[testingRows1,"readmitted"])
